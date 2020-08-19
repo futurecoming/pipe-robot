@@ -1,5 +1,5 @@
 <template>
-  <div id="report">
+  <div id="repair">
     <div class="item">
       <ul>
         <li>{{this.$route.name}}</li>
@@ -13,7 +13,7 @@
 export default {};
 </script>
 <style lang="less">
-#report {
+#repair {
   .item {
     height: 86px;
     box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,6 @@ export default {};
     ul {
       li {
         float: left;
-        color: #303133;
         font-size: 24px;
         padding: 0 10px;
         color: #7598ea;

@@ -73,7 +73,15 @@ const routes = [{
           {
             path: '/report/failureReport',
             component: () => import('@/views/report/FailureReport.vue'),
-          }
+          },
+          {
+            path: '/report/sensorReport',
+            component: () => import('@/views/report/SensorReport.vue'),
+          },
+          {
+            path: '/report/sensorReport/details',
+            component: () => import('@/views/report/SensorRepoDetails.vue'),
+          },
         ]
       },
       {
