@@ -20,6 +20,9 @@ body{
 }
 ul{
   list-style: none;
+  li:hover {
+    cursor: pointer;
+  }
 }
 a{
   text-decoration: none;
