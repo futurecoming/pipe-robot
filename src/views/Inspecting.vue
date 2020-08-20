@@ -6,7 +6,7 @@
       <el-radio-button label="手动巡检"></el-radio-button>
     </el-radio-group>
     <div class="video">
-      <el-aside width="158px">
+      <el-aside v-if="asideShow" width="158px">
         <div class="robot">
           <el-dropdown>
             <span class="el-dropdown-link r_title el-icon-caret-bottom">机器人名称</span>
@@ -32,23 +32,27 @@
             <el-card>
               <div slot="header">
                 <span>{{item === '信息报警' ? item+'设定值' : item}}</span>
-                <i class="el-icon-close" style="float: right; padding: 3px 0; cursor:pointer" @click="closePopover"></i>
+                <i
+                  class="el-icon-close"
+                  style="float: right; padding: 3px 0; cursor:pointer"
+                  @click="closePopover"
+                ></i>
               </div>
               <div class="fn-area">
                 <template v-if="item === '任务计划'">
-                  <MissionScheduler @close="closePopover"/>
+                  <MissionScheduler @close="closePopover" />
                 </template>
 
                 <template v-else-if="item === '信息回传'">
-                  <Sensor @close="closePopover"/>
+                  <Sensor @close="closePopover" />
                 </template>
 
                 <template v-else-if="item === '信息显示'">
-                  <MsgShow @close="closePopover"/>
+                  <MsgShow @close="closePopover" />
                 </template>
 
                 <template v-else-if="item === '信息报警'">
-                  <Warning @close="closePopover"/>
+                  <Warning @close="closePopover" />
                 </template>
               </div>
             </el-card>
@@ -78,15 +82,6 @@ export default {
   data() {
     return {
       modeRadio: "全自动巡检",
-      menus: [
-        "任务计划",
-        "信息回传",
-        "信息显示",
-        "实时视频流",
-        "信息报警",
-        "事件记录",
-        "返回充电",
-      ],
       pendingList: [],
     };
   },
@@ -97,6 +92,38 @@ export default {
       missions: (state) => state.mission.missions,
       sensors: (state) => state.sensor.sensors,
     }),
+    menus() {
+      if (this.modeRadio === "全自动巡检") {
+        return [
+          "任务计划",
+          "信息回传",
+          "信息显示",
+          "实时视频流",
+          "信息报警",
+          "事件记录",
+          "返回充电",
+        ];
+      } else if (this.modeRadio === "半自动巡检") {
+        return [
+          "运动指令",
+          "信息回传",
+          "信息显示",
+          "实时视频流",
+          "信息报警",
+          "事件记录",
+          "返回充电",
+        ];
+      } else {
+        return
+      }
+    },
+    asideShow() {
+      let isShow = true;
+      if (this.modeRadio === "手动巡检") {
+        isShow = false
+      }
+      return isShow
+    }
   },
   async created() {
     await this[types.GET_ALL_SENSORS]();
@@ -122,11 +149,11 @@ export default {
       }
     },
     closePopover() {
-      document.getElementById('app').click();
+      document.getElementById("app").click();
     },
     selectRobot(cur) {
       this[types.SET_CUR_MACHINE](cur);
-    }
+    },
   },
 };
 </script>

@@ -34,6 +34,17 @@
       <el-table-column prop="status" label="状态" align="center"></el-table-column>
     </el-table>
 
+    <el-pagination
+      class="paging"
+      :current-page="filter.pageNum"
+      :page-sizes="[10, 20, 30]"
+      :page-size="filter.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalRows"
+      @size-change="onPageSizeChange"
+      @current-change="onPageCurrentChange"
+    ></el-pagination>
+
     <el-dialog title="维修工单添加" :visible.sync="addVisible">
       <el-form :model="addForm">
         <div class="addDialogLeft fl">
@@ -216,6 +227,10 @@ export default {
       background-color: #7598ea;
       color: white;
     }
+  }
+  .paging {
+    text-align: center;
+    margin: 12px 0;
   }
 }
 </style>

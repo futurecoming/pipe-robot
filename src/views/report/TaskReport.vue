@@ -44,6 +44,17 @@
       <el-table-column prop="status" label="状态" align="center"></el-table-column>
     </el-table>
 
+    <el-pagination
+      class="paging"
+      :current-page="filter.pageNum"
+      :page-sizes="[10, 20, 30]"
+      :page-size="filter.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalRows"
+      @size-change="onPageSizeChange"
+      @current-change="onPageCurrentChange"
+    ></el-pagination>
+
     <!-- 添加的dialog -->
     <el-dialog title="维修工单添加" :visible.sync="addVisible">
       <el-form :model="addForm">
@@ -83,7 +94,7 @@ export default {
   data() {
     return {
       addVisible: false,
-      filter: '',
+      filter: "",
       addForm: [],
       options1: [],
       options: [],
@@ -249,6 +260,10 @@ export default {
   .el-input {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+  }
+  .paging {
+    text-align: center;
+    margin: 12px 0;
   }
 }
 </style>

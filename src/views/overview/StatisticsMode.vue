@@ -595,7 +595,8 @@ export default {
 
 <style lang="less">
 #statistics {
-  height: 100%;;
+  height: 100%;
+  min-height: 1110px;
   p {
     color: darkgrey;
     font-size: 0.8rem;

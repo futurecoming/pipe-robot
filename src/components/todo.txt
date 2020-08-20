@@ -1,1 +1,0 @@
-从inspecting中抽离组件

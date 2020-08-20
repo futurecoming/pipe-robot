@@ -77,8 +77,14 @@
         :filter-multiple="false"
         filter-placement="bottom-end"
         column-key="status"
-      ></el-table-column>
-
+      >
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.status === '等待维修' ? 'warning' : scope.row.status === '正在维修中' ? 'primary' : scope.row.status === '已经完成' ? 'success': 'danger'"
+            disable-transitions
+          >{{scope.row.status}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="expert" label="协助专家" align="center"></el-table-column>
       <el-table-column width="300px" label="操作" align="center">
         <template slot-scope="scope">
@@ -457,7 +463,7 @@ export default {
     viewProgress(row) {
       this.$router.push("/repair/repairProgress");
       this[types.CUR_MAINTAIN_ORDER](row);
-      setSession('curOrder', row)
+      setSession("curOrder", row);
     },
   },
 };

@@ -9,11 +9,11 @@
     <el-container>
       <el-header height="80px">
         <div>
-          <span class="title fl">机器人系统管理平台</span>
+          <span class="title fl"><svg-icon iconClass="robot" style="margin-right: 10px"></svg-icon>机器人系统管理平台</span>
         </div>
         <div class="fr">
           <span class="username">{{userName}}</span>
-          <a href="#" @click.prevent="logout" class="logout">退出</a>
+          <a href="#" @click.prevent="logout" class="logout" style="color: skyblue">退出</a>
           <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
         </div>
       </el-header>

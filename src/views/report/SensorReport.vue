@@ -3,7 +3,7 @@
     <el-row>
       <el-form :inline="true" style="float: right">
         <el-form-item>
-          <el-select v-model="cSensor" placeholder="请选择">
+          <el-select v-model="cSensor" placeholder="请选择传感器">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -65,13 +65,54 @@ export default {
   data() {
     return {
       pickTime: [],
-      options: [],
-      cSensor: ''
+      options: [
+        {
+          label: "pm1",
+          value: "pm1",
+        },
+        {
+          label: "pm2.5",
+          value: "pm25",
+        },
+        {
+          label: "pm10",
+          value: "pm10",
+        },
+        {
+          label: "氧气浓度传感器",
+          value: "oxygen",
+        },
+        {
+          label: "湿度传感器",
+          value: "humidity",
+        },
+        {
+          label: "一氧化碳传感器",
+          value: "co",
+        },
+        {
+          label: "甲烷气体传感器",
+          value: "methance",
+        },
+        {
+          label: "温度传感器",
+          value: "temperature",
+        },
+        {
+          label: "烟雾传感器",
+          value: "smoke",
+        },
+        {
+          label: "硫化氢传感器",
+          value: "hydrothion",
+        },
+      ],
+      cSensor: "",
     };
   },
   methods: {
     genDetails() {
-      this.$router.push('/report/sensorReport/details')
+      this.$router.push("/report/sensorReport/details");
     },
     drawPMCharts() {
       const pmChart = this.$echarts.init(this.$refs.PM, "light");
@@ -130,25 +171,76 @@ export default {
             name: "PM1",
             symbol: "none",
             type: "line",
+            color: "#3dc497",
             smooth: true,
-            stack: "总量",
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [
+              120,
+              132,
+              101,
+              134,
+              90,
+              230,
+              210,
+              245,
+              105,
+              60,
+              56,
+              70,
+              90,
+              123,
+              100,
+              105,
+            ],
           },
           {
             name: "PM2.5",
             symbol: "none",
             type: "line",
+            color: "#fbc755",
             smooth: true,
-            stack: "总量",
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [
+              220,
+              182,
+              191,
+              234,
+              290,
+              330,
+              310,
+              101,
+              134,
+              90,
+              120,
+              132,
+              101,
+              134,
+              90,
+              230,
+            ],
           },
           {
             name: "PM10",
             symbol: "none",
             type: "line",
+            color: "#ce70ce",
             smooth: true,
-            stack: "总量",
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [
+              150,
+              232,
+              201,
+              154,
+              190,
+              330,
+              410,
+              182,
+              191,
+              234,
+              120,
+              132,
+              101,
+              134,
+              90,
+              230,
+            ],
           },
         ],
       });
@@ -164,7 +256,7 @@ export default {
             color: "#606266",
             fontWeight: "normal",
             fontSize: 16,
-          }
+          },
         },
         color: "#ab68f1",
         tooltip: {
@@ -203,11 +295,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "oxygen",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -279,11 +370,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "humidity",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -355,11 +445,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "CO",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -431,11 +520,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "CH4",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -509,15 +597,15 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "temperature",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             itemStyle: {
               normal: {
                 lineStyle: {
-                  color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [ // 右， 下， 左， 上
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    // 右， 下， 左， 上
                     {
                       offset: 0,
                       color: "#2b7ae9",
@@ -602,11 +690,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "smog",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -678,11 +765,10 @@ export default {
         },
         series: [
           {
-            name: "PM1",
+            name: "H2S",
             symbol: "none",
             type: "line",
             smooth: true,
-            stack: "总量",
             data: [
               221,
               345,
@@ -714,14 +800,14 @@ export default {
     this.drawTemperatureChart();
     this.drawSmogChart();
     this.drawH2SChart();
-  }
+  },
 };
 </script>
 
 <style lang="less">
 #sensorReport {
   height: 100vh;
-  min-height: 1100px;
+  min-height: 1025px;
   padding: 20px;
   .container {
     height: 288px;

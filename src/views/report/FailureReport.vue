@@ -34,75 +34,53 @@
       <el-button class="output-btn" icon="el-icon-download">导出</el-button>
     </el-form>
 
-    <el-table
-      :data="tableData"
-      stripe
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="工单名称"
-        align="center"
-        >
-      </el-table-column>
-      <el-table-column
-        prop="content"
-        label="内容"
-        align="center"
-        >
-      </el-table-column>
-      <el-table-column
-        prop="executor"
-        label="执行人"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="expert"
-        label="专家"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="errorTime"
-        label="故障发生时间"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="okTime"
-        label="恢复时间"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="status"
-        label="状态"
-        align="center">
-      </el-table-column>
+    <el-table :data="tableData" stripe style="width: 100%">
+      <el-table-column prop="name" label="工单名称" align="center"></el-table-column>
+      <el-table-column prop="content" label="内容" align="center"></el-table-column>
+      <el-table-column prop="executor" label="执行人" align="center"></el-table-column>
+      <el-table-column prop="expert" label="专家" align="center"></el-table-column>
+      <el-table-column prop="errorTime" label="故障发生时间" align="center"></el-table-column>
+      <el-table-column prop="okTime" label="恢复时间" align="center"></el-table-column>
+      <el-table-column prop="status" label="状态" align="center"></el-table-column>
     </el-table>
-    
+
+    <el-pagination
+      class="paging"
+      :current-page="filter.pageNum"
+      :page-sizes="[10, 20, 30]"
+      :page-size="filter.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalRows"
+      @size-change="onPageSizeChange"
+      @current-change="onPageCurrentChange"
+    ></el-pagination>
+
     <el-dialog title="故障添加" :visible.sync="addVisible">
       <el-form :model="addForm">
         <el-form-item label="报警内容">
-            <el-input v-model="addForm.name" placeholder="输入故障报警内容" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="巡检时间">
-            <el-date-picker
-              v-model="value1"
-              type="date"
-              prefix-icon="el-icon-time"
-              placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="发现人">
-            <el-input v-model="addForm.name" placeholder="选择发现人" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="处理结果">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
+          <el-input v-model="addForm.name" placeholder="输入故障报警内容" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="巡检时间">
+          <el-date-picker
+            v-model="value1"
+            type="date"
+            prefix-icon="el-icon-time"
+            placeholder="选择日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="发现人">
+          <el-input v-model="addForm.name" placeholder="选择发现人" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="处理结果">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addVisible = false">取 消</el-button>
@@ -114,12 +92,13 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      value1: '',
+      filter: {},
+      value1: "",
       addVisible: false,
       addForm: [],
-      filter: '',
+      filter: "",
       addForm: [],
       options1: [],
       pickerOptions: {
@@ -152,92 +131,100 @@ export default {
         ],
       },
       options: [
-        { value: '1', label: '维护中' },
-        { value: '2', label: '维修中' },
-        { value: '3', label: '完成' }
+        { value: "1", label: "维护中" },
+        { value: "2", label: "维修中" },
+        { value: "3", label: "完成" },
       ],
       tableData: [
         {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }, {
-          name: '电力线路',
-          content: '局部温度异常',
-          executor: '李文达',
-          expert: '合理',
-          errorTime: '2020/03/12',
-          okTime: '2020/03/16',
-          status: '维护中'
-        }
-      ]
-    }
-  }
-}
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+        {
+          name: "电力线路",
+          content: "局部温度异常",
+          executor: "李文达",
+          expert: "合理",
+          errorTime: "2020/03/12",
+          okTime: "2020/03/16",
+          status: "维护中",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="less">
-#failureReport{
+#failureReport {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
@@ -264,19 +251,23 @@ export default {
     background-color: orange;
     color: white;
   }
-  .el-table{
+  .el-table {
     border-radius: 5px;
-    box-shadow: 0 0 8px 4px rgba(0,0,0,0.1);
-    .el-table__header{
-        width: 100% !important;
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.1);
+    .el-table__header {
+      width: 100% !important;
     }
-    .el-table__body{
-        width: 100% !important;
+    .el-table__body {
+      width: 100% !important;
     }
   }
-  .el-input{
-    box-shadow: 0 0 8px 2px rgba(0,0,0,0.1);
+  .el-input {
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
     width: 100%;
+  }
+  .paging {
+    text-align: center;
+    margin: 12px 0;
   }
 }
 </style>
